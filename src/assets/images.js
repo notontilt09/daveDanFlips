@@ -51,6 +51,7 @@ const images = [
   {id: 50, src: '/images/AD.jpg', title: 'Ad'},
   {id: 51, src: '/images/AH.jpg', title: 'Ah'},
   {id: 52, src: '/images/AS.jpg', title: 'As'},
+  {id: 53, src: '/images/Yellow_back.jpg', title: 'back'},
 ]
 
 export default images
