@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 
 import images from './assets/images.js';
+import LazyLoad from 'react-lazy-load';
 
 let unshuffledDeck = [];
 const suits = ['s', 'd', 'h', 'c'];
@@ -272,7 +273,11 @@ const App = () => {
           </section>
         </div>
       <div className="board">
-        {board.map(card => <img key={Math.random()} className="card" src={images.find(image => image.title === card).src} alt={card} />)}
+        {board.map(card =>
+          <LazyLoad>
+            <img key={Math.random()} className="card" src={images.find(image => image.title === card).src} alt={card} />
+          </LazyLoad>
+        )}
       </div>
       <div className="score">
       </div>
