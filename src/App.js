@@ -50,7 +50,8 @@ const App = () => {
   const [board, setBoard] = useState([]);
   const [dan, setDan] = useState(0);
   const [dave, setDave] = useState(0);
-  const [message, setMessage] = useState([]);
+  const [danMessage, setDanMessage] = useState([]);
+  const [daveMessage, setDaveMessage] = useState([]);
   const [handNumber, setHandNumber] = useState(0);
   
   useEffect(() => {
@@ -146,7 +147,8 @@ const App = () => {
       }
       
       // message of all props hit
-      let message = [];
+      let danText = [];
+      let daveText = [];
       // final dan score for the hand
       let danHand = 0;
       // final dave score for the hand
@@ -154,61 +156,62 @@ const App = () => {
   
       if (raw.includes('3d')) {
         danHand++;
-        message.push('Dan 3d')
+        danText.push('Dan 3d')
       }
       
       if (redCount === 5) {
         danHand++;
-        message.push('Dan all red')
+        danText.push('Dan all red')
       }
       
       if (flopD === 3 || flopH === 3) {
         danHand++;
-        message.push('Dan flop monotone red')
+        danText.push('Dan flop monotone red')
       }
 
       if (danFlopMatches) {
         danHand += danFlopMatches;
         // add multiple message for multiple flop combos
         for (let i = 0; i < danFlopMatches; i++) {
-          message.push('Dan flop combo');
+          danText.push('Dan flop combo');
         }
       }
 
       if (danBigBoyMatches) {
         danHand += 2;
-        message.push('Dan big boy flop');
+        danText.push('Dan big boy flop');
       }
       
       if (raw.includes('Js')) {
         daveHand++;
-        message.push('Dave Js');
+        daveText.push('Dave Js');
       }
       
       if (blackCount === 5) {
         daveHand++;
-        message.push('Dave all Black');
+        daveText.push('Dave all Black');
       }
       
       if (flopS === 3 || flopC === 3) {
         daveHand++;
-        message.push('Dave flop monotone black');
+        daveText.push('Dave flop monotone black');
       }
 
       if (daveFlopMatches) {
         daveHand += daveFlopMatches;
         // multiple message for multiple flop combos
         for (let i = 0; i < daveFlopMatches; i++) {
-          message.push('Dave flop combo');
+          daveText.push('Dave flop combo');
         }
       }
 
       if (daveBigBoyMatches) {
         daveHand += 2;
-        message.push('Dave big boy flop');
+        daveText.push('Dave big boy flop');
       }
   
-      setMessage(message);
+      setDanMessage(danText);
+      setDaveMessage(daveText);
       setDan(dan => dan + danHand);
       setDave(dave => dave + daveHand);
       setHandNumber(handNumber => handNumber + 1);
@@ -239,15 +242,39 @@ const App = () => {
 
   return (
     <div className="App">
-      <div>Hand Number: {handNumber}</div>
-      <button onClick={dealBoard}>Deal</button>
-      <div className="board">{board.map(card => <img key={Math.random()} className="card" src={images.find(image => image.title === card).src} alt={card} />)}</div>
-      <div className="score">
-        <div>Dan: {dan}</div>
-        <div>Dave: {dave}</div>
-        <div className="messages">
-          {message.map(message => <p key={Math.random()}>{message}</p>)}
+        <div className="container">
+          <section className="scoreboard">
+            <div className="counter">{`Hand ${handNumber}`}</div>
+            <button className="deal" onClick={dealBoard}>Deal</button>
+            <div className="topRow">
+              <div className="home">
+                <h2 className="home__name">Dan</h2>
+
+                {/* TODO STEP 3 - We need to change the hardcoded values in these divs to accept dynamic values from our state. */}
+
+                <div className="home__score">{dan}</div>
+                <div className="messages">
+                  {danMessage &&
+                    danMessage.map(message => <p className="message">{message}</p>)
+                  }
+                </div>
+              </div>
+              <div className="away">
+                <h2 className="away__name">Dave</h2>
+                <div className="away__score">{dave}</div>
+                <div className="messages">
+                  {daveMessage &&
+                    daveMessage.map(message => <p className="message">{message}</p>)
+                  }
+                </div>
+              </div>
+            </div>
+          </section>
         </div>
+      <div className="board">
+        {board.map(card => <img key={Math.random()} className="card" src={images.find(image => image.title === card).src} alt={card} />)}
+      </div>
+      <div className="score">
       </div>
       
     </div>
