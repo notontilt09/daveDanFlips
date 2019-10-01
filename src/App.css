@@ -19,3 +19,11 @@
   align-items: center;
   border: 20px solid black;
 }
+
+@media (max-width: 500px) {
+  .card {
+    width: 14%;
+    height: 100px;
+    margin: 10px;
+  }
+}
