@@ -274,6 +274,7 @@ const App = () => {
         </div>
       <div className="board">
         {board.map(card =>
+        // attempt to improve card rendering UX on non-local host.
           <LazyLoad>
             <img key={Math.random()} className="card" src={images.find(image => image.title === card).src} alt={card} />
           </LazyLoad>
