@@ -246,7 +246,6 @@ const App = () => {
         <div className="container">
           <section className="scoreboard">
             <div className="counter">{`Hand ${handNumber}`}</div>
-            <button className="deal" onClick={dealBoard}>Deal</button>
             <div className="topRow">
               <div className="home">
                 <h2 className="home__name">Dan</h2>
@@ -270,6 +269,7 @@ const App = () => {
                 </div>
               </div>
             </div>
+      <button className="deal" onClick={dealBoard}>Deal</button>
           </section>
         </div>
       <div className="board">
@@ -280,9 +280,6 @@ const App = () => {
           </LazyLoad>
         )}
       </div>
-      <div className="score">
-      </div>
-      
     </div>
   );
 }
