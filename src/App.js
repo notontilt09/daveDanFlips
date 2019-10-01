@@ -53,6 +53,8 @@ const App = () => {
   const [danMessage, setDanMessage] = useState([]);
   const [daveMessage, setDaveMessage] = useState([]);
   const [handNumber, setHandNumber] = useState(0);
+  const [danMultiplier, setDanMultiplier] = useState(1);
+  const [daveMultiplier, setDaveMultiplier] = useState(1);
   
   useEffect(() => {
     setBoard(initBoard);
@@ -212,9 +214,21 @@ const App = () => {
   
       setDanMessage(danText);
       setDaveMessage(daveText);
-      setDan(dan => dan + danHand);
-      setDave(dave => dave + daveHand);
+      setDan(dan => dan + danHand * danMultiplier);
+      setDave(dave => dave + daveHand * daveMultiplier);
       setHandNumber(handNumber => handNumber + 1);
+
+      if (danHand > daveHand) {
+        setDaveMultiplier(1);
+        if (danMultiplier < 3) {
+          setDanMultiplier(danMultiplier + 1);
+        }
+      } else if (daveHand > danHand) {
+        setDanMultiplier(1);
+        if (daveMultiplier < 3) {
+          setDaveMultiplier(daveMultiplier + 1);
+        }
+      }
     }
 
     if (board.length) {
@@ -247,23 +261,23 @@ const App = () => {
             <div className="counter">{`Hand ${handNumber}`}</div>
             <div className="topRow">
               <div className="home">
-                <h2 className="home__name">Dan</h2>
+                <h2 className="home__name">Dan<span className="multiplier">{` ${danMultiplier}x`}</span></h2>
 
                 {/* TODO STEP 3 - We need to change the hardcoded values in these divs to accept dynamic values from our state. */}
 
                 <div className="home__score">{dan}</div>
                 <div className="messages">
                   {danMessage &&
-                    danMessage.map(message => <p className="message">{message}</p>)
+                    danMessage.map(message => <p key={Math.random()} className="message">{message}</p>)
                   }
                 </div>
               </div>
               <div className="away">
-                <h2 className="away__name">Dave</h2>
+                <h2 className="away__name">Dave<span className="multiplier">{` ${daveMultiplier}x`}</span></h2>
                 <div className="away__score">{dave}</div>
                 <div className="messages">
                   {daveMessage &&
-                    daveMessage.map(message => <p className="message">{message}</p>)
+                    daveMessage.map(message => <p key={Math.random()} className="message">{message}</p>)
                   }
                 </div>
               </div>

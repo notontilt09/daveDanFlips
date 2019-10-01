@@ -172,6 +172,12 @@
   color: greenyellow;
 }
 
+.multiplier {
+  font-family: 'Ozone';
+  color: #25d5e5;
+  font-weight: bold;
+}
+
 @media (max-width: 500px) {
   .card {
     width: 75%;
