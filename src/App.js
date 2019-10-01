@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 
 import images from './assets/images.js';
-import LazyLoad from 'react-lazy-load';
 
 let unshuffledDeck = [];
 const suits = ['s', 'd', 'h', 'c'];
@@ -269,15 +268,11 @@ const App = () => {
                 </div>
               </div>
             </div>
-      <button className="deal" onClick={dealBoard}>Deal</button>
+              <button className="deal" onClick={dealBoard}>Deal</button>
           </section>
         </div>
       <div className="board">
-        {board.map(card =>
-        // attempt to improve card rendering UX on non-local host.
-          <LazyLoad>
-            <img key={Math.random()} className="card" src={images.find(image => image.title === card).src} alt={card} />
-          </LazyLoad>
+        {board.map(card => <img key={Math.random()} className="card" src={images.find(image => image.title === card).src} alt={card} />
         )}
       </div>
     </div>
