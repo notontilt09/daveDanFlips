@@ -26,4 +26,9 @@
     height: 100px;
     margin: 10px;
   }
+
+  .board {
+    height: 250px;
+    margin: 30px auto;
+  }
 }
