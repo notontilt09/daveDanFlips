@@ -46,7 +46,6 @@ const danBigBoy = createCombos(['3', '4', '5']);
 const daveBigBoy = createCombos(['J', 'T', '9']);
 
 const App = () => {
-  console.log(images);
   const [deck, setDeck] = useState(unshuffledDeck);
   const [board, setBoard] = useState(initBoard);
   const [dan, setDan] = useState(0);
@@ -66,7 +65,6 @@ const App = () => {
   useEffect(() => {
     // scoreHand function called every time board updates
     const scoreHand = raw => {
-      console.log('board', raw);
       // counting number of red/black cards on board for all red/black
       if (raw.includes('back')) {
         return
@@ -148,13 +146,6 @@ const App = () => {
           
         }
       }
-
-      console.log('red', redCount)
-      console.log('black', blackCount)
-      console.log('flop spades', flopS)
-      console.log('flop diamonds', flopD)
-      console.log('flop hearts', flopH)
-      console.log('flop clubs', flopC)
       
       // message of all props hit
       let danText = [];
