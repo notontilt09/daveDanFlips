@@ -5,7 +5,7 @@ import images from './assets/images.js';
 
 let unshuffledDeck = [];
 const suits = ['s', 'd', 'h', 'c'];
-const ranks = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
+const ranks = ['2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A'];
 const initBoard = ['back', 'back', 'back', 'back', 'back'];
 
 for (let i = 0; i < ranks.length; i++) {
@@ -32,7 +32,7 @@ const createCombos = arr => {
 const arraysEqual = (arr1, arr2) => {
   if(arr1.length !== arr2.length)
       return false;
-  for(var i = arr1.length; i--;) {
+  for(let i = 0; i <  arr1.length; i++) {
       if(arr1[i] !== arr2[i])
           return false;
   }
@@ -43,11 +43,12 @@ const arraysEqual = (arr1, arr2) => {
 const danFlops = createCombos(['A', '6', '2']).concat(createCombos(['Q', 'J', '4'])).concat(createCombos(['K', '8', '7']));
 const daveFlops = createCombos(['9', '8', '3']).concat(createCombos(['A', 'K', 'Q'])).concat(createCombos(['Q', '9', '2']));
 const danBigBoy = createCombos(['3', '4', '5']);
-const daveBigBoy = createCombos(['J', '10', '9']);
+const daveBigBoy = createCombos(['J', 'T', '9']);
 
 const App = () => {
+  console.log(images);
   const [deck, setDeck] = useState(unshuffledDeck);
-  const [board, setBoard] = useState([]);
+  const [board, setBoard] = useState(initBoard);
   const [dan, setDan] = useState(0);
   const [dave, setDave] = useState(0);
   const [danMessage, setDanMessage] = useState([]);
@@ -56,9 +57,6 @@ const App = () => {
   const [danMultiplier, setDanMultiplier] = useState(1);
   const [daveMultiplier, setDaveMultiplier] = useState(1);
   
-  useEffect(() => {
-    setBoard(initBoard);
-  }, [])
   // on mount, and every new hand, get a new full shuffled deck
   useEffect(() => {
     setDeck(shuffle(unshuffledDeck))
@@ -68,6 +66,7 @@ const App = () => {
   useEffect(() => {
     // scoreHand function called every time board updates
     const scoreHand = raw => {
+      console.log('board', raw);
       // counting number of red/black cards on board for all red/black
       if (raw.includes('back')) {
         return
@@ -90,6 +89,8 @@ const App = () => {
           return card.slice(0, 2)
         }
       });
+
+      console.log('flopRanks', flopRanks);
 
       let daveFlopMatches = 0;
       let danFlopMatches = 0;
@@ -147,6 +148,13 @@ const App = () => {
           
         }
       }
+
+      console.log('red', redCount)
+      console.log('black', blackCount)
+      console.log('flop spades', flopS)
+      console.log('flop diamonds', flopD)
+      console.log('flop hearts', flopH)
+      console.log('flop clubs', flopC)
       
       // message of all props hit
       let danText = [];
