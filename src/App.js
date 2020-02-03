@@ -55,11 +55,13 @@ const App = () => {
   const [handNumber, setHandNumber] = useState(0);
   const [danMultiplier, setDanMultiplier] = useState(1);
   const [daveMultiplier, setDaveMultiplier] = useState(1);
+  const [numHands, setNumHands] = useState(1);
+  const [loading, setLoading] = useState(false);
   
   // on mount, and every new hand, get a new full shuffled deck
-  useEffect(() => {
-    setDeck(shuffle(unshuffledDeck))
-  }, [handNumber])
+  // useEffect(() => {
+  //   setDeck(shuffle(unshuffledDeck))
+  // }, [handNumber])
 
   // when the board changes score the hand
   useEffect(() => {
@@ -87,8 +89,6 @@ const App = () => {
           return card.slice(0, 2)
         }
       });
-
-      console.log('flopRanks', flopRanks);
 
       let daveFlopMatches = 0;
       let danFlopMatches = 0;
@@ -213,9 +213,9 @@ const App = () => {
   
       setDanMessage(danText);
       setDaveMessage(daveText);
-      setDan(dan => dan + danHand * danMultiplier);
-      setDave(dave => dave + daveHand * daveMultiplier);
-      setHandNumber(handNumber => handNumber + 1);
+      setDan(dan + danHand * danMultiplier);
+      setDave(dave + daveHand * daveMultiplier);
+      setHandNumber(handNumber + 1);
 
       if (danHand > daveHand) {
         setDaveMultiplier(1);
@@ -246,9 +246,11 @@ const App = () => {
     return array;
   }
 
-  const dealBoard = async () => {
-    const cards = deck.slice(0, 5);
-    setBoard(cards);
+  const dealNumHands = async num => {
+    for (let i = 0; i < num; i++) {
+      let cards = shuffle(unshuffledDeck)
+      await setBoard(cards.slice(0,5))
+    }
   }
 
   
@@ -281,7 +283,17 @@ const App = () => {
                 </div>
               </div>
             </div>
-              <button className="deal" onClick={dealBoard}>Deal</button>
+              {/* <button className="deal" onClick={dealBoard}>Deal</button> */}
+              <div>
+                <label>
+                  Number of Hands To Deal:
+                </label>
+                <input type="number" value={numHands} onChange={(e) => setNumHands(parseInt(e.target.value))} />
+              </div>
+              <button className="deal" onClick={() => dealNumHands(numHands)}>Deal</button>
+              {loading &&
+                <div>Dealing Hands...</div>
+              }
           </section>
         </div>
       <div className="board">

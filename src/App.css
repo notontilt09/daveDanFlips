@@ -178,6 +178,14 @@
   font-weight: bold;
 }
 
+input {
+  margin-left: 10px;
+}
+
+label {
+  margin-right: 10px;
+}
+
 @media (max-width: 500px) {
   .card {
     width: 75%;
